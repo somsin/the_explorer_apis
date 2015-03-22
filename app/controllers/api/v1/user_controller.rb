@@ -10,7 +10,7 @@ class Api::V1::UserController < Api::V1::BaseController
     if params[:email_address].present? && params[:password].present?
       user = User.find_by_email_address_and_password(params[:email_address], params[:password])
       if user.present?
-        response = {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :uuid=>user.uuid, :name=>"#{user.first_name}"+" #{user.last_name}"}
+        response = {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :name=>"#{user.first_name}"+" #{user.last_name}"}
         render_json_success user: response
       else
         render_json_failure error: "Email or password is invalid"
@@ -18,7 +18,6 @@ class Api::V1::UserController < Api::V1::BaseController
     else
       render_json_failure error: "Please enter email_address and password both"
     end
-    render_json_success message: "Success"
   end
 
   def logout
@@ -30,7 +29,7 @@ class Api::V1::UserController < Api::V1::BaseController
   end
 
   def purchase
-    user = User.find_by_email_address(params[:uuid])
+    user = User.find_by_email_address(params[:email_address])
     subscriber = user.subscriber
     if subscriber.present?
       subscriber.expire_at = params[:expire_at]
