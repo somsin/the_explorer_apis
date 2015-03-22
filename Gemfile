@@ -41,7 +41,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'uuidtools'
 # Asset related
-gem "uuid-support", :git => "github:US/uuid-support-gem", :tag => "v1.1.7", :require => 'uuid_support'
+# gem "uuid-support", :git => "github:US/uuid-support-gem", :tag => "v1.1.7", :require => 'uuid_support'
 
 gem "protected_attributes"
 
