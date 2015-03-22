@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  include UUIDSupport
-
   self.table_name = 'users'
   attr_accessible :email_address, :username, :first_name, :last_name, :status, :uuid, :mobile_no, :device_id, :pin_code, :email_promotional, :signup_code, :session_flag, :password
 

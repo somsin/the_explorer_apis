@@ -1,5 +1,5 @@
 class Merchant < ActiveRecord::Base
-  include UUIDSupport  
+    
   self.table_name = 'merchants'
 
   attr_accessible :email_address, :name, :address_id, :expire_at, :merchant_type, :uuid

@@ -1,6 +1,4 @@
 class Order < ActiveRecord::Base
-  include UUIDSupport
-
   self.table_name = 'order'
   
   attr_accessible :user_id, :deal_id, :deal_count, :is_redeem, :voucher_code, :rating:integer

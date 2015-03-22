@@ -1,5 +1,4 @@
 class Address < ActiveRecord::Base
-  include UUIDSupport
 
   self.table_name = 'addresses'
 
