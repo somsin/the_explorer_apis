@@ -9,18 +9,16 @@ class User < ActiveRecord::Base
 
   has_one :subscriber, :class_name => "UserSubscribers"
 
-  uuid_column :uuid, :string_format => :to_s, :version => :timestamp
-
   def self.add_new_user(signup_params)
     user = User.new(signup_params)
     user.session_flag = true
     user.save!
-    {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :uuid=>user.uuid, :name=>"#{user.first_name}" +"#{user.last_name}"}
+    {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :name=>"#{user.first_name}" +"#{user.last_name}"}
   end
 
   def self.get_user_info(user)
     if user.present?
-      {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :uuid=>user.uuid, :name=>"#{user.first_name}" + "#{user.last_name}", :password => user.password, :session_flag => user.session_flag, :email_promotional=>user.email_promotional, :device_id=>user.device_id, :pin_code=>user.pin_code, :signup_code=>user.signup_code }
+      {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :name=>"#{user.first_name}" + "#{user.last_name}", :password => user.password, :session_flag => user.session_flag, :email_promotional=>user.email_promotional, :device_id=>user.device_id, :pin_code=>user.pin_code, :signup_code=>user.signup_code }
     else
       "User does not exits"
     end
