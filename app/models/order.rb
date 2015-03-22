@@ -1,4 +1,3 @@
-require 'uuid_support'
 class Order < ActiveRecord::Base
   include UUIDSupport
 

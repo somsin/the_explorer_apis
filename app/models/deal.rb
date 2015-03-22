@@ -1,4 +1,3 @@
-require 'uuid_support'
 class Deal < ActiveRecord::Base
   include UUIDSupport
   self.table_name = 'deals'

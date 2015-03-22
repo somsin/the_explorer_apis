@@ -1,5 +1,3 @@
-require 'uuid_support'
-
 class Address < ActiveRecord::Base
   include UUIDSupport
 

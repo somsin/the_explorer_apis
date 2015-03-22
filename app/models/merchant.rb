@@ -1,4 +1,3 @@
-require 'uuid_support'
 class Merchant < ActiveRecord::Base
   include UUIDSupport  
   self.table_name = 'merchants'

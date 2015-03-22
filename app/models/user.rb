@@ -1,4 +1,3 @@
-require 'uuid_support'
 class User < ActiveRecord::Base
   include UUIDSupport
 
