@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email_address: MyString
+  merchant_name: MyString
+  address_id: 1
+  expire_at: 2015-01-31
+  merchant_type: MyString
+  uuid: 
+
+two:
+  email_address: MyString
+  merchant_name: MyString
+  address_id: 1
+  expire_at: 2015-01-31
+  merchant_type: MyString
+  uuid: 

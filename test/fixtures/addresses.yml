@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  country: MyString
+  city: MyString
+  state: MyString
+  street: MyString
+  pincode: 1
+  landmark: MyText
+  latitude: 9.99
+  longitude: 9.99
+  mobile_no: MyString
+  merchant_id: 1
+  uuid: 
+
+two:
+  country: MyString
+  city: MyString
+  state: MyString
+  street: MyString
+  pincode: 1
+  landmark: MyText
+  latitude: 9.99
+  longitude: 9.99
+  mobile_no: MyString
+  merchant_id: 1
+  uuid: 

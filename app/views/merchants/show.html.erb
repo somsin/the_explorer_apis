@@ -1,0 +1,25 @@
+<% title @merchant.name %>
+
+<div id="deals">
+  <% for deal in @merchant.deals %>
+    <div class="deal">
+      <%= image_tag deal.logo_image_url(:thumb) if deal.logo_image? %>
+      <%= image_tag deal.image1_url(:thumb) if deal.image1? %>
+      <%= image_tag deal.image2_url(:thumb) if deal.image2? %>
+      <%= image_tag deal.image3_url(:thumb) if deal.image3? %>
+      <%= image_tag deal.image4_url(:thumb) if deal.image4? %>
+      <div class="name"><%= deal.name %></div>
+      <div class="actions">
+        <%= link_to "edit", edit_deal_path(deal) %> |
+        <%= link_to "remove", deal, :confirm => 'Are you sure?', :method => :delete %>
+      </div>
+    </div>
+  <% end %>
+  <div class="clear"></div>
+</div>
+<p>
+  <%= link_to "Add a deal", new_deal_path(:merchant_id => @merchant) %> |
+  <%= link_to "Add a address", new_address_path(:merchant_id => @merchant) %> |
+  <%= link_to "Remove Merchant", @merchant, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View Merchants", merchants_path %>
+</p>

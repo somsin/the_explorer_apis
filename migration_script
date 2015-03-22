@@ -1,0 +1,15 @@
+rails generate model user email_address:string username:string first_name:string last_name:string password:string status:string uuid:binary mobile_no:string device_id:string pin_code:string email_promotional:boolean signup_code:string session_flag:boolean
+
+rails generate model address country:string city:string state:string street:string pincode:integer landmark:text latitude:decimal longitude:decimal mobile_no:string merchant_id:integer uuid:binary
+
+rails generate model deal title:text logo_id:integer banner_ids:text description:text start_at:date end_at:date merchant_id:integer price:decimal discount:string avail_count:integer sold_count:integer type:string uuid:binary event_flag:boolean
+
+rails generate model event title:text deal_id:integer start_at:date end_at:date logo_id:integer 
+
+rails generate model images image_file:blob deal_id:integer
+
+rails generate model merchant email_address:string merchant_name:string address_id:integer expire_at:date merchant_type:string uuid:binary
+
+rails generate model order user_id:integer deal_id:integer deal_count:integer is_redeem:boolean voucher_code:text rating:integer
+
+rails generate model user_subscriber purchase:integer expire_at:date user_id:integer

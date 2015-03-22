@@ -1,0 +1,16 @@
+<%= form_for @merchant do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :email_address %><br />
+    <%= f.text_field :email_address %>
+  </p>
+  <p>
+    <%= f.label :merchant_type %><br />
+    <%= f.text_field :merchant_type %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

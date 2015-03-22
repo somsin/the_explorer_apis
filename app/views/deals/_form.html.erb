@@ -1,0 +1,61 @@
+<%= form_for @deal, :html => {:multipart => true} do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :merchant_id %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </p>
+  <p>
+    <%= f.label :discount %><br />
+    <%= f.text_field :discount %>
+  </p>
+  <p>
+    <%= f.label :deal_type %><br />
+    <%= f.text_field :deal_type %>
+  </p>
+  <p>
+    <%= f.label :logo_image %><br />
+    <%= f.file_field :logo_image %>
+  </p>
+  <p>
+    <%= f.label :image1 %><br />
+    <%= f.file_field :image1 %>
+  </p>
+  <p>
+    <%= f.label :image2 %><br />
+    <%= f.file_field :image2 %>
+  </p>
+  <p>
+    <%= f.label :image3 %><br />
+    <%= f.file_field :image3 %>
+  </p>
+  <p>
+    <%= f.label :image4 %><br />
+    <%= f.file_field :image4 %>
+  </p>
+  <p>
+    <%= f.label :start_at %><br />
+    <%= f.text_field :start_at %>
+  </p>
+  <p>
+    <%= f.label :end_at %><br />
+    <%= f.text_field :end_at %>
+  </p>
+  <p>
+    <%= f.label :event_flag %><br />
+    <%= f.text_field :event_flag %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

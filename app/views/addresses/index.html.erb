@@ -1,0 +1,11 @@
+<% if @address.blank? %>
+<p>There are not any adderss.</p>
+<% else %>
+<p>This is the current address in our system</p>
+<ul id="Addresses">
+<% @addresses.each do |c| %>
+<li><%= link_to c.city, {:action => 'show', :id => c.id} -%></li>
+<% end %>
+</ul>
+<% end %>
+<p><%= link_to "Add new address", {:action => 'new' }%></p>

@@ -1,0 +1,10 @@
+<% title "Merchants" %>
+
+<% for merchant in @merchants %>
+  <div class="merchant">
+    <h2><%= link_to merchant.name, merchant %></h2>
+    Deals: <%= merchant.deals.size %>
+  </div>
+<% end %>
+
+<p><%= link_to "New Merchant", new_merchant_path %></p>
