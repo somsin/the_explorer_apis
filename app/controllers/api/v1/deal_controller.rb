@@ -48,7 +48,7 @@ class Api::V1::DealController < Api::V1::BaseController
       :end_at=>deal.end_at,
       :avail_count=>deal.avail_count,
       :sold_count=>deal.sold_count,
-      :merchant_info=>merchant_info(deal.merchant), if deal.merchant.present?
+      :merchant_info=>merchant_info(deal.merchant) if deal.merchant.present?,
       :address_info=>address_info(deal.merchant.addresses.first) if deal.merchant.present? && deal.merchant.addresses.present? && deal.merchant.addresses.first.present?
     }
   end
