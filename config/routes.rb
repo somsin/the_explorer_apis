@@ -66,7 +66,7 @@ TheExplorerApis::Application.routes.draw do
           put :reset_password
         end
       end
-      resource :deal, :controller => 'deal'
+      resources :deal, :controller => 'deal'
       resources :merchant, :controller => 'merchant'
     end
   end

@@ -1,0 +1,216 @@
+diff --git a/app/controllers/api/v1/deal_controller.rb b/app/controllers/api/v1/deal_controller.rb
+index e69de29..7de96e9 100644
+--- a/app/controllers/api/v1/deal_controller.rb
++++ b/app/controllers/api/v1/deal_controller.rb
+@@ -0,0 +1,65 @@
++class Api::V1::DealController < Api::V1::BaseController
++
++  def index
++    deals = Deal.all
++    response = construct_deals_list(deals)
++    render_json_success deals: response
++  end
++
++  def show
++    deal = get_deal
++    if deal.present?
++      response = construct_deal(deal)
++      render_json_success deal: response
++    else
++      render_json_failure error: "Please enter deal id"
++    end
++  end
++
++
++
++  private
++
++  def get_deal
++    Deal.find(params[:id]) if params[:id].present?
++  end
++
++  def construct_deals_list(deals)
++    deals.map do |deal|
++      construct_deal(deal)
++      # {:id=>deal.id, :title=>deal.title, :description=>deal.description, :price=>deal.price, :discount=>deal.discount, :type=>deal.deal_type, :event_flag=>deal.event_flag, :logo_image=>deal.logo_image}
++    end
++  end
++
++  def construct_deal(deal)
++    {
++      :id=>deal.id, 
++      :title=>deal.title, 
++      :description=>deal.description, 
++      :price=>deal.price, 
++      :discount=>deal.discount, 
++      :type=>deal.deal_type, 
++      :event_flag=>deal.event_flag, 
++      :logo_image=>deal.logo_image,
++      :image1=>deal.image1,
++      :image2=>deal.image2,
++      :image3=>deal.image3,
++      :image4=>deal.image4,
++      :start_at=>deal.start_at,
++      :end_at=>deal.end_at,
++      :avail_count=>deal.avail_count,
++      :sold_count=>deal.sold_count,
++      :merchant_info=>merchant_info(deal.merchant), if deal.merchant.present?
++      :address_info=>address_info(deal.merchant.addresses.first) if deal.merchant.present? && deal.merchant.addresses.present? && deal.merchant.addresses.first.present?
++    }
++  end
++
++  def merchant_info(merchant)
++    {:id=>merchant.id, :email_address=>merchant.email_address, :name=>merchant.name, :type=>merchant.merchant_type, :expire_at=>merchant.expire_at} 
++  end
++
++  def address_info(addresse)
++    {:id=>addresse.id, :addresse=>addresse.merchant_address, :pincode=>addresse.pincode, :latitude=>addresse.latitude, :longitude=>addresse.longitude, :mobile_no=>addresse.mobile_no}
++  end
++
++end
+diff --git a/app/controllers/api/v1/merchant_controller.rb b/app/controllers/api/v1/merchant_controller.rb
+index e69de29..3666dcb 100644
+--- a/app/controllers/api/v1/merchant_controller.rb
++++ b/app/controllers/api/v1/merchant_controller.rb
+@@ -0,0 +1,54 @@
++class Api::V1::MerchantController < Api::V1::BaseController
++
++  def index
++    merchants = Merchant.all
++    response = construct_merchants_list(merchants)
++    render_json_success merchants: response
++  end
++
++  def show
++    merchant = get_merchant
++    if merchant.present?
++      response = construct_merchant(merchant)
++      render_json_success merchants: response
++    else
++      render_json_failure error: "Please enter email_address or id both"
++    end
++  end
++
++  private
++  def construct_merchants_list(merchants)
++    merchants.map do |merchant|
++      merchant_hash = {:id=>merchant.id, :email_address=>merchant.email_address, :name=>merchant.name, :type=>merchant.merchant_type, :expire_at=>merchant.expire_at} 
++    end
++  end
++
++  def get_merchant
++    if params[:id].present?
++      merchant = Merchant.find(params[:id])
++    elsif params[:email_address].present?
++      merchant = Merchant.find_by_email_address(params[:email_address])
++    end
++  end
++
++  def construct_merchant(merchant)
++    merchant_info = {:id=>merchant.id, :email_address=>merchant.email_address, :name=>merchant.name, :type=>merchant.merchant_type, :expire_at=>merchant.expire_at} 
++    merchant_info[:addresses] = construct_addresses(merchant.addresses)
++    merchant_info[:deals] = construct_deals(merchant.deals)
++    merchant_info
++  end
++
++  def construct_addresses(addresses)
++    addresses.map do |addresse|
++      {:id=>addresse.id, :addresse=>addresse.merchant_address, :pincode=>addresse.pincode, :latitude=>addresse.latitude, :longitude=>addresse.longitude, :mobile_no=>addresse.mobile_no}
++    end
++  end
++
++  def construct_deals(deals)
++    deals.map do |deal|
++      {:id=>deal.id, :title=>deal.title, :description=>deal.description, :price=>deal.price, :discount=>deal.discount, :type=>deal.deal_type, :event_flag=>deal.event_flag, :logo_image=>deal.logo_image}
++    end
++  end 
++end
++
++
+diff --git a/app/controllers/api/v1/user_controller.rb b/app/controllers/api/v1/user_controller.rb
+index 15d8738..d5b8713 100644
+--- a/app/controllers/api/v1/user_controller.rb
++++ b/app/controllers/api/v1/user_controller.rb
+@@ -10,7 +10,7 @@ class Api::V1::UserController < Api::V1::BaseController
+     if params[:email_address].present? && params[:password].present?
+       user = User.find_by_email_address_and_password(params[:email_address], params[:password])
+       if user.present?
+-        response = {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :uuid=>user.uuid, :name=>"#{user.first_name}"+" #{user.last_name}"}
++        response = {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :name=>"#{user.first_name}"+" #{user.last_name}"}
+         render_json_success user: response
+       else
+         render_json_failure error: "Email or password is invalid"
+@@ -18,7 +18,6 @@ class Api::V1::UserController < Api::V1::BaseController
+     else
+       render_json_failure error: "Please enter email_address and password both"
+     end
+-    render_json_success message: "Success"
+   end
+ 
+   def logout
+@@ -30,7 +29,7 @@ class Api::V1::UserController < Api::V1::BaseController
+   end
+ 
+   def purchase
+-    user = User.find_by_email_address(params[:uuid])
++    user = User.find_by_email_address(params[:email_address])
+     subscriber = user.subscriber
+     if subscriber.present?
+       subscriber.expire_at = params[:expire_at]
+diff --git a/app/models/order.rb b/app/models/order.rb
+index db3f65b..55dc688 100644
+--- a/app/models/order.rb
++++ b/app/models/order.rb
+@@ -1,10 +1,8 @@
+-require 'uuid_support'
+ class Order < ActiveRecord::Base
+-  include UUIDSupport
+ 
+   self.table_name = 'order'
+   
+-  attr_accessible :user_id, :deal_id, :deal_count, :is_redeem, :voucher_code, :rating:integer
++  attr_accessible :user_id, :deal_id, :deal_count, :is_redeem, :voucher_code, :rating, :integer
+   
+   belongs_to :user , :class_name => "User"
+ end
+diff --git a/app/models/user.rb b/app/models/user.rb
+index 0ae0508..98548cc 100644
+--- a/app/models/user.rb
++++ b/app/models/user.rb
+@@ -9,13 +9,11 @@ class User < ActiveRecord::Base
+ 
+   has_one :subscriber, :class_name => "UserSubscribers"
+ 
+-  uuid_column :uuid, :string_format => :to_s, :version => :timestamp
+-
+   def self.add_new_user(signup_params)
+     user = User.new(signup_params)
+     user.session_flag = true
+     user.save!
+-    {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :uuid=>user.uuid, :name=>"#{user.first_name}" +"#{user.last_name}"}
++    {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :name=>"#{user.first_name}" +"#{user.last_name}"}
+   end
+ 
+   def self.get_user_info(user)
+@@ -28,7 +26,7 @@ class User < ActiveRecord::Base
+ 
+   def logout
+     self.session_flag = false
+-    user.save!
++    self.save!
+   end
+ 
+ end
+diff --git a/config/routes.rb b/config/routes.rb
+index 4e6f76a..4e3198b 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -66,7 +66,7 @@ TheExplorerApis::Application.routes.draw do
+           put :reset_password
+         end
+       end
+-      resource :deal, :controller => 'deal'
++      resources :deal, :controller => 'deal'
+       resources :merchant, :controller => 'merchant'
+     end
+   end

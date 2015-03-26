@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   def self.get_user_info(user)
     if user.present?
-      {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :name=>"#{user.first_name}" + "#{user.last_name}", :password => user.password, :session_flag => user.session_flag, :email_promotional=>user.email_promotional, :device_id=>user.device_id, :pin_code=>user.pin_code, :signup_code=>user.signup_code }
+      {:email_address=>user.email_address, :mobile_no=>user.mobile_no, :uuid=>user.uuid, :name=>"#{user.first_name}" + "#{user.last_name}", :password => user.password, :session_flag => user.session_flag, :email_promotional=>user.email_promotional, :device_id=>user.device_id, :pin_code=>user.pin_code, :signup_code=>user.signup_code }
     else
       "User does not exits"
     end
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
   def logout
     self.session_flag = false
-    user.save!
+    self.save!
   end
 
 end

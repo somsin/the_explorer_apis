@@ -1,0 +1,69 @@
+Login - 
+Url
+-http://localhost:3000/api/v1/user/login?email_address=ragupta@gmail.com&password=pass
+input - email_address, password
+output -
+{
+http_code: 200,
+user: {
+email_address: "ragupta@gmail.com",
+mobile_no: "9677080978",
+name: "Raunak Gupta"
+}
+}
+ 
+Logout-
+url- http://localhost:3000/api/v1/user/logout?email_address=ragupta@gmail.com
+input - email_address
+output -{
+http_code: 200,
+message: "ragupta@gmail.com logout Successfully"
+}
+
+url- http://localhost:3000/api/v1/user/signup?first_name=Raunak&last_name=Gupta&mobile_no=9677080978&device_id=12345678&email_promotional=true&pin_code=1234
+input - :email_address, :first_name, :last_name, :mobile_no, :device_id, :pin_code, :email_promotional, :password 
+output-
+{
+    "http_code": 200,
+    "user": {
+        "email_address": "raunakgupta.29@gmail.com",
+        "mobile_no": "9677080978",
+        "name": "RaunakGupta"
+    }
+}
+
+url- http://localhost:3000/api/v1/user/reset_password?email_address=ragupta@gmail.com&password=New
+input- email_address, password
+output-
+{
+    "http_code": 200,
+    "message": "Password updated Successfully"
+}
+
+User Detail
+url- http://localhost:3000/api/v1/user/user_detail?email_address=ragupta@gmail.com
+input- email_address/uuid Note- use email_address
+output-
+  {
+    http_code: 200,
+    user: {
+    email_address: "ragupta@gmail.com",
+    mobile_no: "9677080978",
+    uuid: null,
+    name: "RaunakGupta",
+    password: "New",
+    session_flag: false,
+    email_promotional: true,
+    device_id: "12345678",
+    pin_code: "1234",
+    signup_code: null
+  }
+}
+
+url- http://localhost:3000/api/v1/user/purchase?email_address=ragupta@gmail.com&expire_at=12/12/2015&purchase=20
+input- email_address, expire_at, purchase(amount he paid)
+output -
+{
+    "http_code": 200,
+    "message": "Success"
+}
