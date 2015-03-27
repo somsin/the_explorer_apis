@@ -48,17 +48,23 @@ class Api::V1::DealController < Api::V1::BaseController
       :end_at=>deal.end_at,
       :avail_count=>deal.avail_count,
       :sold_count=>deal.sold_count,
-      :merchant_info=>merchant_info(deal.merchant) if deal.merchant.present?,
-      :address_info=>address_info(deal.merchant.addresses.first) if deal.merchant.present? && deal.merchant.addresses.present? && deal.merchant.addresses.first.present?
+      :merchant_info=>merchant_info(deal),
+      :address_info=>address_info(deal)
     }
   end
 
-  def merchant_info(merchant)
-    {:id=>merchant.id, :email_address=>merchant.email_address, :name=>merchant.name, :type=>merchant.merchant_type, :expire_at=>merchant.expire_at} 
+  def merchant_info(deal)
+    if deal.merchant.present?
+      merchant = deal.merchant
+      {:id=>merchant.id, :email_address=>merchant.email_address, :name=>merchant.name, :type=>merchant.merchant_type, :expire_at=>merchant.expire_at}
+    end
   end
 
-  def address_info(addresse)
-    {:id=>addresse.id, :addresse=>addresse.merchant_address, :pincode=>addresse.pincode, :latitude=>addresse.latitude, :longitude=>addresse.longitude, :mobile_no=>addresse.mobile_no}
+  def address_info(deal)
+    if deal.merchant.present? && deal.merchant.addresses.present? && deal.merchant.addresses.first.present?
+      addresse = deal.merchant.addresses.first
+      {:id=>addresse.id, :addresse=>addresse.merchant_address, :pincode=>addresse.pincode, :latitude=>addresse.latitude, :longitude=>addresse.longitude, :mobile_no=>addresse.mobile_no}
+    end
   end
 
 end

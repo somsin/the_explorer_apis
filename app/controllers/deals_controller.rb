@@ -28,7 +28,7 @@ class DealsController < ApplicationController
   end
 
   def destroy
-    @deal = Deal.find(params[:id])
+    @deal = Deal.find(params[:id])app/controllers/api/v1/deal_controller.rb
     @deal.destroy
     flash[:notice] = "Successfully destroyed painting."
     redirect_to @deal.merchant
